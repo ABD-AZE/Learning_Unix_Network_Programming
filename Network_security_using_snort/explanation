@@ -1,0 +1,13 @@
+Snort uses a signature-based detection technique to identify malicious activities. It analyzes network packets in real time and compares them against predefined rules (signatures).
+
+1) Pattern Matching:
+  Snort checks packet headers and payloads for known patterns, such as TCP SYN packets used in port scanning.
+
+2) Protocol Analysis:
+  It examines protocol behavior (TCP, ICMP, etc.) to detect abnormal usage, like excessive ICMP requests in a flood attack.
+
+3) Threshold/Rate Detection:
+  Snort monitors the frequency of packets. If a large number of packets are sent in a short time (e.g., during port scanning or ICMP flooding), it triggers an alert.
+
+4) Rule-Based Detection:
+  Custom rules define what traffic is suspicious (e.g., repeated SSH login attempts), allowing Snort to detect unauthorized access attempts.

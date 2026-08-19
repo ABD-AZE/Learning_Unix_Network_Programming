@@ -1,0 +1,27 @@
+AES-128 BMP Image Encryption - Observations
+
+OpenSSL Commands Used:
+openssl rand 16 > aes_key
+openssl rand 16 > aes_iv
+openssl aes-128-ecb -in Sample.bmp -out Sample_ecb.enc -K $(xxd -p aes_key)
+openssl aes-128-cbc -in Sample.bmp -out Sample_cbc.enc -K $(xxd -p aes_key) -iv $(xxd -p aes_iv)
+head -c 54 Sample.bmp > header
+tail -c +55 Sample_ecb.enc > body
+cat header body > new_ecb.bmp
+tail -c +55 Sample_cbc.enc > body
+cat header body > new_cbc.bmp
+
+Observations:
+
+ECB Mode (new_ecb.bmp):
+- Shows patterns from the original image
+- Identical blocks encrypt to identical ciphertext
+- Less secure - reveals image structure
+
+CBC Mode (new_cbc.bmp):
+- Appears as random noise
+- No visible patterns from original
+- More secure - hides image structure
+
+Conclusion:
+ECB mode is insecure for images as it preserves patterns. CBC mode provides better security by randomizing the output.

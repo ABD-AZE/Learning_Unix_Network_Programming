@@ -1,0 +1,39 @@
+Modified Program with SIGCHLD Handler - Analysis
+
+Modified Program Output
+
+Signal mask set
+SIGCHLD signal received! Signal number: 17
+SIGHUP is in mask
+SIGCHLD is in mask
+Program completed successfully
+
+Program Modifications
+
+1. Added SIGCHLD signal handler function:
+   void sigchld_handler(int sig) {
+       printf("SIGCHLD signal received! Signal number: %d\n", sig);
+   }
+
+2. Installed signal handler using signal(SIGCHLD, sigchld_handler)
+
+Explanation of Output
+
+1. "Signal mask set"
+   - Confirms signal masking was applied
+   - Fixed the printf format string bug from original
+
+2. "SIGCHLD signal received! Signal number: 17"
+   - Signal handler executed when SIGCHLD was delivered
+   - Signal number 17 is SIGCHLD on Linux systems
+   - Handler ran because signals were temporarily unblocked
+
+3. "SIGHUP is in mask" 
+   - sigsuspend resets the older mask i.e. set, set contained SIGCHLD and SIGHUP, thus the Output
+
+4. "SIGCHLD is in mask" 
+   - sigsuspend resets the older mask i.e. set, set contained SIGCHLD and SIGHUP, thus the Output
+
+3. "Program completed successfully"
+   - Program reached end of main() function
+   - No infinite wait or manual termination required

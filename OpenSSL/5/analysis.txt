@@ -1,0 +1,59 @@
+5a Analysis
+    Output observed:
+    0 14 
+    14 0
+
+    Explanation:
+    This program demonstrates byte order (endianness) conversion using htons().
+
+    1. Initial value: port = 5120 (decimal) = 0x1400 (hexadecimal)
+
+    2. First printf output: "0 14"
+    - Prints each byte of 'port' in memory order
+    - Intel processors use little-endian byte order
+    - 0x1400 is stored as: [0x00, 0x14] in memory
+    - Output shows: 0 14 (low byte first, then high byte)
+
+    3. After htons(port): port2 = htons(5120)
+    - htons() converts from host byte order to network byte order
+    - Network byte order is big-endian
+    - Converts 0x1400 to big-endian format
+
+    4. Second printf output: "14 0"
+    - Shows port2 bytes in memory order
+    - After htons(), the bytes are swapped: [0x14, 0x00]
+    - Output shows: 14 0 (high byte first, then low byte)
+
+    Key Concept: Intel x86/x64 processors use little-endian, but network protocols use big-endian (network byte order).
+
+5b Analysis:
+
+    Output observed:
+    ignal mask set
+
+    Explanation:
+    This program demonstrates UNIX signal handling and signal masks.
+
+    1. "ignal mask set" output:
+    - The printf statement has a typo: "%signal mask set\n"
+    - The '%' is treated as a format specifier, causing "%" to be consumed
+    - Result: prints "ignal mask set" (missing 's' from "signal")
+
+    2. Program behavior:
+    - Creates signal sets for SIGCHLD and SIGHUP
+    - Blocks these signals using sigprocmask(SIG_BLOCK, ...)
+    - Sends SIGCHLD to itself using kill(getpid(), SIGCHLD)
+    - Calls sigsuspend(&zero) which suspends execution until a signal arrives
+    - Since SIGCHLD is blocked, it doesn't wake up the process
+    - Process waits indefinitely until interrupted (Ctrl+C sends SIGINT)
+
+    3. Missing output:
+    - The final printf statements for signal checking never execute
+    - Program terminates at sigsuspend() before reaching them
+
+    Key Concept: Signal masking allows blocking specific signals while waiting for others.
+
+    === Summary ===
+
+    Program 5a: Demonstrates little-endian to big-endian conversion for network programming
+    Program 5b: Shows signal handling concepts but has a printf format bug and infinite wait condition

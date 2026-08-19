@@ -1,0 +1,5 @@
+Hello, this is a test file for UDP file transfer!
+This file contains multiple lines to test the reliability.
+Line 3: Testing packet loss simulation.
+Line 4: Ensuring acknowledgments work correctly.
+Line 5: Final line to complete the test.
